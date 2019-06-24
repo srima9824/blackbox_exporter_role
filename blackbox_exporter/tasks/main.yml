@@ -1,0 +1,15 @@
+---
+# tasks file for blackbox_exporter
+- import_tasks: install_blackbox_exporter.yml
+  become: true
+
+- import_tasks: configure_blackbox_exporter.yml
+  become: true
+
+- name: Starting and enabling blackbox exporter
+  become: true
+  systemd:
+    daemon_reload: true
+    name: blackbox_exporter
+    state: started
+    enabled: true

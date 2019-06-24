@@ -1,0 +1,33 @@
+---
+- name: Creating blackbox_exporter system group
+  group:
+        name: blackbox_exporter
+        system: true
+        state: present
+
+- name: Creating blackbox_exporter system user
+  user: 
+       name: blackbox_exporter
+       system: true
+       shell: "/sbin/nologin"
+       group: blackbox_exporter
+       create_home: false
+
+- name: Downloading blackbox_exporter binary to a local folder 
+  become: true
+  unarchive:
+            src: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{blackbox_exporter_version}}/blackbox_exporter-0.12.0.linux-amd64.tar.gz"
+            dest: "/tmp"
+            remote_src: true
+            creates: "/tmp/blackbox_exporter-{{blackbox_exporter_version}}.linux-amd64/blackbox_exporter"
+
+- name: Copying blackbox_exporter binary files to /usr/local/bin
+  copy:
+          src: "/tmp/blackbox_exporter-{{blackbox_exporter_version}}.linux-amd64/blackbox_exporter"
+          dest: "/usr/local/bin/blackbox_exporter"
+          remote_src: true
+          mode: 0750
+          owner: blackbox_exporter
+          group: blackbox_exporter
+  notify:
+         - restart blackbox exporter

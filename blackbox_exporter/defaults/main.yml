@@ -1,0 +1,11 @@
+---
+# defaults file for blackbox_exporter
+blackbox_exporter_version: 0.12.0
+blackbox_exporter_download_location: /tmp
+blackbox_exporter_configuration_modules:
+  http_2xx:
+    prober: http
+    timeout: 5s
+    http:
+      valid_status_codes: []
+      method: GET
