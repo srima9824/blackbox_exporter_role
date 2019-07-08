@@ -4,17 +4,15 @@
     path: /etc/blackbox_exporter
     state: directory
 
-- name: Configuring blackbox_exporter 
+- name: Configuring blackbox_exporter
   template:
     src: blackbox_exporter.yml.j2
     dest: /etc/blackbox_exporter/blackbox_exporter.yml
-    owner: blackbox_exporter
-    group: blackbox_exporter
+    owner: "{{blackbox_exporter_user}}"
+    group: "{{blackbox_exporter_group}}"
     mode: 0644
-  notify:
-    - reload blackbox exporter
 
-- name: Creating systemd service unit 
+- name: Creating systemd service unit
   template:
     src: blackbox_exporter.service.j2
     dest: /etc/systemd/system/blackbox_exporter.service
@@ -23,6 +21,3 @@
     mode: 0644
   notify:
     - restart blackbox exporter
-
-
-

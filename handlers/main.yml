@@ -11,4 +11,3 @@
   systemd:
     name: blackbox_exporter
     state: reloaded
-
