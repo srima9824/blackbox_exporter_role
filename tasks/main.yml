@@ -1,6 +1,6 @@
 ---
 # tasks file for blackbox_exporter
-- import_tasks: blackbox_exporter.yml
+- include_tasks: blackbox_exporter.yml
 
 - name: Starting and enabling blackbox exporter
   systemd:
